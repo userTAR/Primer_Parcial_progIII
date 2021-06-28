@@ -1,17 +1,21 @@
 <?php
 
 if (isPizzaCarga())
-    require_once "./controller/PizzaCarga.php";
+require_once "./controller/PizzaCarga.php";
 else if (IsPizzaConsultar())
-    require_once "./controller/PizzaConsultar.php";
+require_once "./controller/PizzaConsultar.php";
 else if (IsAltaVenta())
-    require_once "./controller/AltaVenta.php";
+require_once "./controller/AltaVenta.php";
 else if (IsConsultasVenta())  
-    require_once "./controller/ConsultasVentas.php";
+require_once "./controller/ConsultasVentas.php";
 else if(IsModificarVenta())
-    require_once "./controller/ModificarVenta.php";
+require_once "./controller/ModificarVenta.php";
 else if(IsBorrarVenta())
-    require_once "./controller/BorrarVenta.php";
+require_once "./controller/BorrarVenta.php";
+else if(IsGenerarDevolucion())
+require_once "./controller/DevolverPizza.php";
+else if(IsConsultasDevoluciones())
+require_once "./controller/ConsultasDevoluciones.php";
 
 
 
@@ -70,4 +74,14 @@ function IsBorrarVenta()
         parse_str(file_get_contents('php://input'), $_DELETE);
     
     return isset($_DELETE["numero_pedido"]);
+}
+
+function IsGenerarDevolucion()
+{
+    return isset($_POST["causa"]);
+}
+
+function IsConsultasDevoluciones()
+{
+    return isset($_POST["consulta"]);
 }

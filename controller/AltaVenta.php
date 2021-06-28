@@ -1,12 +1,15 @@
 <?php
 require_once "./clases/Pizza.php";
 require_once "./clases/Venta.php";
+require_once "./clases/Devoluciones.php";
+require_once "./clases/Cupon.php";
 
 $mail = isset($_POST["mail"]) ? $_POST["mail"] : null;
 $sabor = isset($_POST["sabor"]) ? $_POST["sabor"] : null;
 $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : null;
 $cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : null;
 $foto = isset($_FILES["foto"]) ? $_FILES["foto"] : null;
+
 
 $pizzaMatch = Pizza::BuscarPizzaPorTipo_Sabor("./archivos/pizza.json",$sabor,$tipo);
 //si existe la pizza
