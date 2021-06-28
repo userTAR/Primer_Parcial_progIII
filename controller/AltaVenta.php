@@ -9,7 +9,7 @@ $sabor = isset($_POST["sabor"]) ? $_POST["sabor"] : null;
 $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : null;
 $cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : null;
 $foto = isset($_FILES["foto"]) ? $_FILES["foto"] : null;
-$numeroCupon = isset($_FILES["cupon"]) ? $_POST["cupon"] : null;
+$numeroCupon = isset($_POST["cupon"]) ? $_POST["cupon"] : null;
 
 
 $pizzaMatch = Pizza::BuscarPizzaPorTipo_Sabor("./archivos/pizza.json",$sabor,$tipo);
@@ -21,18 +21,18 @@ if($pizzaMatch != false)
     {
         $codigoPedido = random_int(0,100000);
         //punto 10:
-        if($cupon != null)
+        if($numeroCupon != null)
         {
             $arrayCupon = Cupon::TraerJSON("./archivos/cupones.json");
             $cup = Cupon::BuscarCuponPorCodigo("./archivos/cupones.json",$numeroCupon);
             if($cup != false && $arrayCupon != false)
             {
                 //calculo el total y guardo el importe en el archivo
-                $precioTotal = $pizzaMatch->precio * $cantidad - $pizzaMatch->precio * ($cup->descuento/100);
+                $precioTotal = $pizzaMatch->precio * $cantidad - ($pizzaMatch->precio * $cantidad * ((int)$cup->descuento/100));
                 if(Cupon::GuardarImporte($codigoPedido,$precioTotal))
                 {
                     //modifico el archivo para cambiarle el estado
-                    unlink("./archivos/importes.json");
+                    unlink("./archivos/cupones.json");
                     foreach ($arrayCupon as $value) {
                         if($value->id == $cup->id)
                             $value->estado = "obsoleto";

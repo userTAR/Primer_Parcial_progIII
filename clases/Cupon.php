@@ -113,7 +113,7 @@ class Cupon
         return $array;
     }
 
-    static function BuscarCuponPorCodigo($path,$numeroPedido)
+    static function BuscarCuponPorCodigo($path,$codigoCupon)
     {
         $array = self::TraerJSON($path);
         $retorno = false;
@@ -122,7 +122,7 @@ class Cupon
         {
             foreach ($array as $value) 
             {
-                if($value->numeroPedido == $numeroPedido)
+                if($value->codigo == $codigoCupon)
                 {
                     $retorno = $value;
                     break;
