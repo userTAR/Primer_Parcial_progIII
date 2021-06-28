@@ -42,7 +42,6 @@ class Cupon
         fclose($archivo);
         return $retorno;
     }
-
     static function TraerJSON($path)
     {
         $array = array();
@@ -69,18 +68,52 @@ class Cupon
         return $array;
     }
 
-    //en base a un array
-    static function EmularID($arrayDeBusqueda)
+    static function GuardarImporte($id, $precio)
     {
-        $nuevoID = null;
-        if($arrayDeBusqueda != false)
+        $importe = new stdClass();
+        $importe->id = $id;
+        $importe->precio = $precio;
+
+        $archivo = fopen("./archivos/importes.json",'a');
+        if(!fwrite($archivo,json_encode($importe) ."\r\n"))
         {
-            $nuevoID = (int)$arrayDeBusqueda[count($arrayDeBusqueda)-1]->id + 1;
+            $retorno = false;
         }
-        return $nuevoID;
+        else
+        {
+            $retorno = true;
+        }
+        
+        fclose($archivo);
+        return $retorno;
+    }
+    static function TraerImporte()
+    {
+        $array = array();
+        if(file_exists("./archivos/importes.json"))
+        {
+            $archivo = fopen("./archivos/importes.json", 'r');
+
+            while(!feof($archivo))
+            {
+                $line = json_decode(Trim(fgets($archivo)));
+                if($line == "" || $line == null)
+                    continue;
+                else
+                {
+                    $importe = new stdClass($line->id,$line->precio);
+                    array_push($array,$importe);
+                }
+            }
+            fclose($archivo);
+        }
+        else 
+            $array = false;
+
+        return $array;
     }
 
-    static function BuscarCuponPorID($path,$id)
+    static function BuscarCuponPorCodigo($path,$numeroPedido)
     {
         $array = self::TraerJSON($path);
         $retorno = false;
@@ -89,7 +122,7 @@ class Cupon
         {
             foreach ($array as $value) 
             {
-                if($value->sabor == $id)
+                if($value->numeroPedido == $numeroPedido)
                 {
                     $retorno = $value;
                     break;

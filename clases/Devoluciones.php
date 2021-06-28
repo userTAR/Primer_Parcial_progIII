@@ -81,7 +81,7 @@ class Devolucion
         return $nuevoID;
     }
 
-    static function BuscarDevolucionPorID($path,$id)
+    static function BuscarCuponPorID($path,$id)
     {
         $array = self::TraerJSON($path);
         $retorno = false;
@@ -90,7 +90,7 @@ class Devolucion
         {
             foreach ($array as $value) 
             {
-                if($value->numeroPedido == $id)
+                if($value->id == $id)
                 {
                     $retorno = $value;
                     break;
@@ -132,4 +132,5 @@ class Devolucion
 
         return $retorno;
     }
+
 }

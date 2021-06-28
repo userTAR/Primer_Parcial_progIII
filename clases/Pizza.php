@@ -115,7 +115,7 @@ class Pizza
         {
             foreach ($array as $value) 
             {
-                if($value->sabor == $id)
+                if($value->id == $id)
                 {
                     $retorno = $value;
                     break;
