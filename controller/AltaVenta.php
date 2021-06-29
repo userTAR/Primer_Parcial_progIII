@@ -21,10 +21,10 @@ if($pizzaMatch != false)
     {
         $codigoPedido = random_int(0,100000);
         //punto 10:
-        if($numeroCupon != null)
+        $cup = Cupon::BuscarCuponPorCodigo("./archivos/cupones.json",$numeroCupon);
+        if($numeroCupon != null || $cup->estado == "pendiente")
         {
             $arrayCupon = Cupon::TraerJSON("./archivos/cupones.json");
-            $cup = Cupon::BuscarCuponPorCodigo("./archivos/cupones.json",$numeroCupon);
             if($cup != false && $arrayCupon != false)
             {
                 //calculo el total y guardo el importe en el archivo
